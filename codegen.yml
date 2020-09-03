@@ -1,0 +1,17 @@
+overwrite: true
+schema: 'http://localhost:5000/api'
+documents: 'src/resolvers/**/*.graphql'
+generates:
+    src/resolvers/index.tsx:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-react-apollo'
+            - 'apollo-hooks-codegen'
+        config:
+            withHOC: false
+            withComponent: false
+            withHooks: true
+    ./graphql.schema.json:
+        plugins:
+            - 'introspection'

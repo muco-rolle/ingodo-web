@@ -1,0 +1,9 @@
+query getTransaction($transactionId: String!) {
+    transaction(transactionId: $transactionId) {
+        id
+        type
+        description
+        amount
+        createdAt
+    }
+}

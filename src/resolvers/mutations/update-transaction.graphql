@@ -1,0 +1,16 @@
+mutation updateTransaction(
+    $type: String!
+    $description: String!
+    $amount: Int!
+    $transactionId: String!
+) {
+    updateTransaction(
+        transaction: { type: $type, description: $description, amount: $amount }
+        transactionId: $transactionId
+    ) {
+        id
+        type
+        amount
+        description
+    }
+}

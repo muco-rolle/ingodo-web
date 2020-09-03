@@ -1,0 +1,14 @@
+mutation createTransaction(
+    $type: String!
+    $description: String!
+    $amount: Int!
+) {
+    createTransaction(
+        transaction: { type: $type, description: $description, amount: $amount }
+    ) {
+        type
+        description
+        amount
+        createdAt
+    }
+}
