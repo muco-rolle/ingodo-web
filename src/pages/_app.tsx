@@ -1,36 +1,16 @@
 import React, { useEffect } from 'react';
-import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { AppProps } from 'next/app';
+import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { red } from '@material-ui/core/colors';
 
-import {
-	MuiThemeProvider,
-	createMuiTheme,
-	Theme,
-	StylesProvider,
-} from '@material-ui/core';
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { NextWithApollo } from 'config';
 import { DocumentHead } from 'components';
-import 'typeface-pacifico'; // logo font
+import { theme } from 'theme';
 
-const theme: Theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: '#556cd6',
-		},
-		secondary: {
-			main: '#19857b',
-		},
-		error: {
-			main: red.A400,
-		},
-		background: {
-			default: '#fff',
-		},
-	},
-});
+import 'typeface-pacifico'; // logo font
 
 interface MyAppProps extends AppProps {
 	apollo: ApolloClient<unknown>;
