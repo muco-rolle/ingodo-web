@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import { StyledHomeView } from './home-view.styles';
+import { StyledHomeView } from './HomeView.styles';
 
 export const HomeView = (): any => {
 	return (
