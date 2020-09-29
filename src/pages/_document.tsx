@@ -1,55 +1,34 @@
-import Document, {
-    DocumentContext,
-    Html,
-    Head,
-    Main,
-    NextScript,
-} from 'next/document';
-import { ServerStyleSheet as StyledComponentSheets } from 'styled-components';
-import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles';
+import Document, { DocumentContext } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
+import { CssBaseline } from '@geist-ui/react';
 
 export default class MyDocument extends Document {
-    static async getInitialProps(ctx: DocumentContext) {
-        const styledComponentSheets = new StyledComponentSheets();
-        const materialUiServerStyleSheets = new MaterialUiServerStyleSheets();
-        const originalRenderPage = ctx.renderPage;
+	static async getInitialProps(ctx: DocumentContext) {
+		const sheet = new ServerStyleSheet();
+		const styles = CssBaseline.flush();
 
-        try {
-            ctx.renderPage = () =>
-                originalRenderPage({
-                    enhanceApp: (App) => (props) =>
-                        styledComponentSheets.collectStyles(
-                            materialUiServerStyleSheets.collect(
-                                <App {...props} />
-                            )
-                        ),
-                });
+		const originalRenderPage = ctx.renderPage;
 
-            const initialProps = await Document.getInitialProps(ctx);
-            return {
-                ...initialProps,
-                styles: (
-                    <>
-                        {initialProps.styles}
-                        {styledComponentSheets.getStyleElement()}
-                        {materialUiServerStyleSheets.getStyleElement()}
-                    </>
-                ),
-            };
-        } finally {
-            styledComponentSheets.seal();
-        }
-    }
+		try {
+			ctx.renderPage = () =>
+				originalRenderPage({
+					enhanceApp: (App) => (props) =>
+						sheet.collectStyles(<App {...props} />),
+				});
 
-    render() {
-        return (
-            <Html lang="en">
-                <Head />
-                <body>
-                    <Main />
-                    <NextScript />
-                </body>
-            </Html>
-        );
-    }
+			const initialProps = await Document.getInitialProps(ctx);
+			return {
+				...initialProps,
+				styles: (
+					<>
+						{initialProps.styles}
+						{styles}
+						{sheet.getStyleElement()}
+					</>
+				),
+			};
+		} finally {
+			sheet.seal();
+		}
+	}
 }
