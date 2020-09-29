@@ -15,11 +15,11 @@ export const DocumentHead = (props: DocumentHeadProps): JSX.Element => {
 			/>
 			<meta httpEquiv="X-UA-Compatible" content="ie=edge" />
 
-			{/* plus jakarta font */}
 			<link
 				rel="stylesheet"
-				href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/plus-jakarta-display.min.css"
+				href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/nevermind.min.css"
 			/>
+
 			<title>Ingodo | {props.title || 'Home'}</title>
 		</NextHead>
 	);

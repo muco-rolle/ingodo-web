@@ -2,10 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
     *, *::before, *::after {
-        font-family: ${({ theme }) => theme.typography.fontFamily}  !important;
+        font-family: inherit !important;
     }
 
-    body {
-        background-color: white;
+    html {
+        font-family: 'Nunito', sans-serif !important;
+
     }
 `;
