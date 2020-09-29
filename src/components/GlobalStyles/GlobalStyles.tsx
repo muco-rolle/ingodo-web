@@ -9,4 +9,8 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Nunito', sans-serif !important;
 
     }
+
+   ::selection {
+        color: white !important;
+    }
 `;
