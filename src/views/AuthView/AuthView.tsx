@@ -8,11 +8,14 @@ import {
 	Spacer,
 	useInput,
 } from '@geist-ui/react';
+import { useToasts } from 'react-toast-notifications';
+
 import { Facebook } from '@geist-ui/react-icons';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { DocumentHead } from 'components';
 export const AuthView = () => {
 	const { state, reset, bindings } = useInput('');
+	const { addToast } = useToasts();
 
 	return (
 		<StyledAuthView>
@@ -41,8 +44,8 @@ export const AuthView = () => {
 					</Grid.Container>
 				</div>
 
-				<div className="link-auth">
-					<Text p>Or with a secure link</Text>
+				<div className="code-auth">
+					<Text p>Or with a secure code</Text>
 
 					<Input
 						placeholder="Enter your email"
@@ -56,10 +59,17 @@ export const AuthView = () => {
 						auto
 						onClick={() => {
 							console.log(state);
+							addToast(
+								'Check your inbox we sent a secure link to login',
+								{
+									appearance: 'success',
+								}
+							);
+
 							reset();
 						}}
 					>
-						Send me link
+						Send me code
 					</Button>
 				</div>
 			</Card>

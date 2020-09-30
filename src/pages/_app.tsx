@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
 import { GeistProvider, CssBaseline } from '@geist-ui/react';
+import { ToastProvider } from 'react-toast-notifications';
 
 import { NextWithApollo } from 'config';
 import { DocumentHead, GlobalStyles } from 'components';
@@ -21,7 +22,9 @@ const MyApp = ({ pageProps, apollo, Component }: MyAppProps): JSX.Element => {
 					<DocumentHead />
 					<CssBaseline />
 					<GlobalStyles />
-					<Component {...pageProps} />
+					<ToastProvider>
+						<Component {...pageProps} />
+					</ToastProvider>
 				</GeistProvider>
 			</ThemeProvider>
 		</ApolloProvider>
