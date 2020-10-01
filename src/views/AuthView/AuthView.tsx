@@ -8,13 +8,18 @@ import {
 	Spacer,
 	useInput,
 } from '@geist-ui/react';
-
 import { Facebook } from '@geist-ui/react-icons';
 import { AiOutlineGoogle } from 'react-icons/ai';
+
 import { DocumentHead, TextInputError } from 'components';
 import { notify } from 'utils';
+import { validation } from 'config';
+import { useState } from 'react';
 export const AuthView = () => {
 	const { state, reset, bindings } = useInput('');
+	const [validationError, setValidationError] = useState('');
+
+	const authCheck = validation.auth.check({ email: state });
 
 	return (
 		<StyledAuthView>
@@ -52,21 +57,28 @@ export const AuthView = () => {
 						width="100%"
 						{...bindings}
 					/>
-					<TextInputError>Invalid Email</TextInputError>
+					<TextInputError>{validationError}</TextInputError>
 
 					<Spacer y={1} />
 					<Button
 						type="success"
 						auto
 						onClick={() => {
-							console.log(state);
 							notify({
 								type: 'success',
 								title: 'Login succeeded',
 								message:
 									"Check your inbox we've sent you the code",
 							});
-							reset();
+
+							if (authCheck.email.hasError) {
+								setValidationError(
+									authCheck.email.errorMessage
+								);
+							} else {
+								reset();
+								setValidationError('');
+							}
 						}}
 					>
 						Send me code
