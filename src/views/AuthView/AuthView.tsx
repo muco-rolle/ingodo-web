@@ -12,15 +12,45 @@ import { Facebook } from '@geist-ui/react-icons';
 import { AiOutlineGoogle } from 'react-icons/ai';
 
 import { DocumentHead, TextInputError } from 'components';
-import { notify } from 'utils';
-import { validation } from 'config';
+import { notify, redirectTo } from 'utils';
+import { validation, routes } from 'config';
 import { useState } from 'react';
+import { useAuthMutation } from 'graphql-resolvers';
 export const AuthView = () => {
 	const { state, reset, bindings } = useInput('');
 	const [validationError, setValidationError] = useState('');
+	const [authenticateUser, { loading }] = useAuthMutation();
 
 	const authCheck = validation.auth.check({ email: state });
 
+	const handleAuthentication = async () => {
+		try {
+			if (!authCheck.email.hasError) {
+				const response = await authenticateUser({
+					variables: { email: state },
+				});
+
+				const { message } = response.data.auth;
+
+				if (message === 'SEND_CODE.SUCCEEDED') {
+					notify({
+						type: 'success',
+						title: 'Login success',
+						message: `You've logged in successfull, check your inbox we've sent a verification code on ${state}`,
+					});
+
+					redirectTo(routes.verifyCode);
+				}
+
+				reset();
+				setValidationError('');
+			} else {
+				setValidationError(authCheck.email.errorMessage);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<StyledAuthView>
 			<DocumentHead title="Auth" />
@@ -63,23 +93,8 @@ export const AuthView = () => {
 					<Button
 						type="success"
 						auto
-						onClick={() => {
-							notify({
-								type: 'success',
-								title: 'Login succeeded',
-								message:
-									"Check your inbox we've sent you the code",
-							});
-
-							if (authCheck.email.hasError) {
-								setValidationError(
-									authCheck.email.errorMessage
-								);
-							} else {
-								reset();
-								setValidationError('');
-							}
-						}}
+						loading={loading}
+						onClick={handleAuthentication}
 					>
 						Send me code
 					</Button>
