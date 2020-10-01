@@ -1,0 +1,5 @@
+mutation auth($email: String!) {
+	auth(user: { email: $email }) {
+		message
+	}
+}

@@ -11,7 +11,7 @@ import {
 
 import { Facebook } from '@geist-ui/react-icons';
 import { AiOutlineGoogle } from 'react-icons/ai';
-import { DocumentHead } from 'components';
+import { DocumentHead, TextInputError } from 'components';
 import { notify } from 'utils';
 export const AuthView = () => {
 	const { state, reset, bindings } = useInput('');
@@ -43,7 +43,7 @@ export const AuthView = () => {
 					</Grid.Container>
 				</div>
 
-				<div className="code-auth">
+				<form className="form">
 					<Text p>Or with a secure code</Text>
 
 					<Input
@@ -52,6 +52,8 @@ export const AuthView = () => {
 						width="100%"
 						{...bindings}
 					/>
+					<TextInputError>Invalid Email</TextInputError>
+
 					<Spacer y={1} />
 					<Button
 						type="success"
@@ -69,7 +71,7 @@ export const AuthView = () => {
 					>
 						Send me code
 					</Button>
-				</div>
+				</form>
 			</Card>
 		</StyledAuthView>
 	);
