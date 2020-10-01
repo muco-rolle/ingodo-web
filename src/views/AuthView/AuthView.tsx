@@ -21,7 +21,7 @@ export const AuthView = () => {
 			<DocumentHead title="Auth" />
 			<Card width="400px" shadow className="auth-card">
 				<div className="intro">
-					<Text h4>Welcome on ingodo</Text>
+					<Text h3>Welcome on ingodo</Text>
 				</div>
 
 				<div className="social-auth">

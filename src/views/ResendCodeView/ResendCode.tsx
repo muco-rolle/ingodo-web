@@ -10,7 +10,7 @@ export const ResendCodeView = () => {
 			<DocumentHead title="Resend Code" />
 			<Card width="400px" shadow className="auth-card">
 				<div className="intro">
-					<Text h4>Send Code</Text>
+					<Text h3>Send Code</Text>
 				</div>
 
 				<div className="code-auth">
