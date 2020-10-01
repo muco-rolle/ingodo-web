@@ -2,14 +2,12 @@ import styled from 'styled-components/macro';
 import dynamic from 'next/dynamic';
 
 import { Text, Card, Button, Spacer, useInput } from '@geist-ui/react';
-import { useToasts } from 'react-toast-notifications';
 import { DocumentHead } from 'components';
 
 const ReactCodeInput = dynamic(import('react-code-input'));
 
 export const VerifyCodeView = () => {
 	const { state, reset, bindings } = useInput('');
-	const { addToast } = useToasts();
 
 	return (
 		<StyledVerifyCodeView>
@@ -29,6 +27,7 @@ export const VerifyCodeView = () => {
 						name="code"
 						type="text"
 						fields={6}
+						className="custom-code-input"
 						{...bindings}
 					/>
 					<Spacer y={1} />
@@ -37,12 +36,6 @@ export const VerifyCodeView = () => {
 						auto
 						onClick={() => {
 							console.log(state);
-							addToast(
-								'Check your inbox we sent a secure link to login',
-								{
-									appearance: 'success',
-								}
-							);
 
 							reset();
 						}}
@@ -63,7 +56,27 @@ const StyledVerifyCodeView = styled.div`
 	background-size: cover;
 	height: 100vh;
 
-	.auth-card {
+	.code-card {
 		margin: 20px;
+	}
+
+	.custom-code-input {
+		display: flex !important;
+		justify-content: space-between;
+		width: 100%;
+		input {
+			display: inline-block;
+			border-radius: 4px;
+			border: 1px solid lightgrey;
+			box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
+			padding-left: 8px;
+			margin: 5px;
+			width: 42px;
+			height: 42px;
+			font-size: 32px;
+			box-sizing: border-box;
+			color: black;
+			background-color: white;
+		}
 	}
 `;

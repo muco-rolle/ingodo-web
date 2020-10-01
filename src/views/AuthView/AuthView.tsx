@@ -8,14 +8,13 @@ import {
 	Spacer,
 	useInput,
 } from '@geist-ui/react';
-import { useToasts } from 'react-toast-notifications';
 
 import { Facebook } from '@geist-ui/react-icons';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { DocumentHead } from 'components';
+import { notify } from 'utils';
 export const AuthView = () => {
 	const { state, reset, bindings } = useInput('');
-	const { addToast } = useToasts();
 
 	return (
 		<StyledAuthView>
@@ -59,13 +58,12 @@ export const AuthView = () => {
 						auto
 						onClick={() => {
 							console.log(state);
-							addToast(
-								'Check your inbox we sent a secure link to login',
-								{
-									appearance: 'success',
-								}
-							);
-
+							notify({
+								type: 'success',
+								title: 'Login succeeded',
+								message:
+									"Check your inbox we've sent you the code",
+							});
 							reset();
 						}}
 					>
